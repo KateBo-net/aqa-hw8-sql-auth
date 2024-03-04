@@ -21,8 +21,8 @@ public class SQLHelper {
     }
 
     public static String getVerificationCode() {
-        try {
-            Connection connect = getConnection();
+        try(Connection connect = getConnection())
+        {
             String queryVerCode = "SELECT code  FROM auth_codes ORDER by created DESC LIMIT 1";
             return QUERY_RUNNER.query(connect, queryVerCode, new ScalarHandler<>());
         } catch (SQLException e) {
@@ -32,8 +32,8 @@ public class SQLHelper {
     }
 
     public static void cleanDB() {
-        try {
-            Connection connect = getConnection();
+        try(Connection connect = getConnection())
+        {
             cleanVerCodeTable();
             QUERY_RUNNER.execute(connect, "DELETE FROM card_transactions");
             QUERY_RUNNER.execute(connect, "DELETE FROM cards");
@@ -44,8 +44,8 @@ public class SQLHelper {
     }
 
     public static void cleanVerCodeTable() {
-        try {
-            Connection connect = getConnection();
+        try(Connection connect = getConnection())
+        {
             QUERY_RUNNER.execute(connect, "DELETE FROM auth_codes");
         } catch (SQLException e) {
             e.printStackTrace();

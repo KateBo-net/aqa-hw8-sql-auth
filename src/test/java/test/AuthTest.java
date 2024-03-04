@@ -11,6 +11,9 @@ import static data.SQLHelper.*;
 public class AuthTest {
 
     LoginPage loginPage;
+    private final String incorrectAuthMsg = "Неверно указан логин или пароль";
+    private final String incorrectCodeMsg = "Неверно указан код! Попробуйте ещё раз";
+    private final String limitMsg = "Ошибка!";
 
     @BeforeEach
     public void setup() {
@@ -37,7 +40,7 @@ public class AuthTest {
 
     @Test
     public void shouldGetErrorInvalidLogin() {
-        loginPage.invalidLogin(generateRandomAuthInfo());
+        loginPage.invalidLogin(generateRandomAuthInfo(), incorrectAuthMsg);
     }
 
     @Test
@@ -45,7 +48,7 @@ public class AuthTest {
         AuthInfo user = getValidAuthInfo();
         VerificationPage verificationPage = loginPage.validLogin(user);
         String verificationCode = getRandomVerificationCode();
-        verificationPage.invalidVerify(verificationCode);
+        verificationPage.invalidVerify(verificationCode, incorrectCodeMsg);
     }
 
     @Test
@@ -59,6 +62,6 @@ public class AuthTest {
         back();
         loginPage.validLogin(user);
         String verificationCode = getVerificationCode();
-        verificationPage.overLimitVerify(verificationCode);
+        verificationPage.overLimitVerify(verificationCode, limitMsg);
     }
 }

@@ -10,8 +10,6 @@ public class VerificationPage {
     private final SelenideElement codeField = $("[data-test-id=code] input");
     private final SelenideElement verifyButton = $("[data-test-id=action-verify]");
     private final SelenideElement errorMsg = $("[data-test-id=error-notification]");
-    private final String textMsg = "Неверно указан код! Попробуйте ещё раз";
-    private final String limitMsg = "Ошибка!";
 
     public VerificationPage() {
         codeField.shouldBe(visible);
@@ -27,14 +25,14 @@ public class VerificationPage {
         return new DashboardPage();
     }
 
-    public void invalidVerify(String verificationCode) {
+    public void invalidVerify(String verificationCode, String textMsg) {
         verify(verificationCode);
         errorMsg
                 .shouldBe(visible)
                 .shouldHave(text(textMsg));
     }
 
-    public void overLimitVerify(String verificationCode) {
+    public void overLimitVerify(String verificationCode, String limitMsg) {
         verify(verificationCode);
         errorMsg
                 .shouldBe(visible)

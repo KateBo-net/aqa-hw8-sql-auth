@@ -12,7 +12,6 @@ public class LoginPage {
     private final SelenideElement passwordField = $("[data-test-id=password] input");
     private final SelenideElement sendButton = $("[data-test-id=action-login]");
     private final SelenideElement errorMsg = $("[data-test-id=error-notification]");
-    private final String textMsg = "Неверно указан логин или пароль";
 
     private void login(AuthInfo info) {
         loginField.setValue(info.getLogin());
@@ -26,7 +25,7 @@ public class LoginPage {
         return new VerificationPage();
     }
 
-    public void invalidLogin(AuthInfo info) {
+    public void invalidLogin(AuthInfo info, String textMsg) {
         login(info);
         errorMsg
                 .shouldBe(visible)
